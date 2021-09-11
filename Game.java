@@ -4,7 +4,7 @@ public class Game {
     private Player p1; private Player p2;
     private boolean currentPlayer;
     public boolean gameOver = false;
-    private int d1 = 0; private int d2 = 0; private int d3 = 0; private int d4 = 0;
+    private int[] rolls = new int[4];
     private final int numPlayerTokens = 15;
 
     Game(Player p1, Player p2) {
@@ -16,16 +16,35 @@ public class Game {
         currentPlayer = ((Math.round(Math.random())) == 1) ? true : false;
     }
     public void doDiceRoll() {
-        d1 = (int)(Math.random()*6) + 1;
-        d2 = (int)(Math.random()*6) + 1;
-        if(d1==d2) { d3=d1; d4=d1; }
+        rolls[0] = (int)(Math.random()*6) + 1;
+        rolls[1] = (int)(Math.random()*6) + 1;
+        if(rolls[0]==rolls[1]) { rolls[2]=rolls[0]; rolls[3]=rolls[0]; }
+    }
+    public int tokenShift(int index, int roll, Color color) {
+        if(color == Color.B) {
+            return Math.min(index+roll, 25);
+        } else {
+            return Math.max(0,index-roll);
+        }
     }
     public void repl() {}
-    public boolean validMove() {
-        // https://usbgf.org/learn-backgammon/backgammon-rules-and-terms/rules-of-backgammon/
-        ruleOne(); //calls for each rule, make function for each
+    public boolean validMove(Color c) {
+        //Move[] moves = stores spot/dice pairs
+        //Call validMoveRec(moves, rolls)
 
-
+        //Something in purg?
+        //Filter the totla moves down to spots of our color also not home
+    }
+    public int[] validMoveRec(int[] move, int[] dice, Color color) {
+        for(int i=0; i<dice.length; i++) {
+            Move[] temp = new Move[move.length];
+            for(int j=0; j<move.length; j++) {
+                int index = tokenShift(move[j].spotNum(), dice[j], color);
+                //Is that a valid place to move it (your color or blank, or one other color)
+            }
+            //if there is a dice roll left
+            validMoveRec(temp, spliceRolls(dice, i), color);
+        }
     }
     public boolean gameOver() {
         if (board.getSpotCount(board.bHome()) == numPlayerTokens || board.getSpotCount(board.wHome()) == numPlayerTokens) {
@@ -43,7 +62,7 @@ public class Game {
             doDiceRoll();
 
             //While any dice not 0:
-            while( g.d1 + g.d2 + g.d3 + g.d4 != 0 && !g.gameOver) {
+            while( rolls[0]+ rolls[1] + rolls[2] + rolls[3] != 0 && !g.gameOver) {
                 move = p.move(g);
                 //check move valid, if not return false and try again
                 if (g.validMove()) {
