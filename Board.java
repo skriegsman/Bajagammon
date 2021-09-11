@@ -18,6 +18,22 @@ public class Board {
     board[19].setCount(5);  board[19].setColor(Color.B);
     board[24].setCount(2);  board[24].setColor(Color.W);
   }
+  Board(Board b) {
+      this.bPurg = b.bPurg;
+      this.wPurg = b.wPurg;
+      this.board = b.getDeepBoard();
+  }
+
+  public Spot[] getDeepBoard() {
+      Spot[] temp = new Spot[boardSize];
+      for(int i=0; i<boardSize; i++) {
+          temp[i] = new Spot(board[i]);
+      }
+      return temp;
+  }
+
+  public int wHome() { return 0; }
+  public int bHome() { return boardSize-1; }
 
   public Color getSpotType(int spot) { return board[spot].getColor(); }
   public int getSpotCount(int spot) { return board[spot].getCount(); }
@@ -42,7 +58,7 @@ public class Board {
     Increments the count of the spot
   */
   public void purgToSpot(Color color, int spot) {
-    (color == Color.W) ? wPurg-- : bPurg--;
+    if(color == Color.W){ wPurg--; }else{ bPurg--; }
     board[spot].incCount(color);
   }
   /**

@@ -7,6 +7,10 @@ public class Spot{
   private int count = 0;
 
   Spot(){} //Constructor
+  Spot(Spot s) {
+      this.color = s.color;
+      this.count = s.count;
+  }
 
   //Methods to get and set the color
   public Color getColor() { return color; }
