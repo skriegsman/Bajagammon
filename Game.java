@@ -29,36 +29,41 @@ public class Game {
     }
     public void repl() {}
     public boolean validMove(Color c) {
-        //Move[] moves = stores spot/dice pairs
+        //Check if purgatory --> if so, separate case
+
+        int numFilledSpots = 0;
+        for(int i=1; i<board.boardSize-1; i++) {
+            if(board.getSpotType(i) == c) {numFilledSpots++;}
+        }
+        Move[] moves = new Move[numFilledSpots];
+        for(int i=1, j=0; i<board.boardSize-1; i++) {
+            if(board.getSpotType(i) == c) {
+                moves[j] = new Move(i, c);
+            }
+        }
         if (rolls[0] != rolls[1]) {
             int[] tempRolls = {rolls[0], rolls[1]};
         }
-        //Call validMoveRec(moves, tempRolls)
-
-        //Something in purg?
-        //Filter the totla moves down to spots of our color also not home
+        validMoveRec(moves, tempRolls); // need global move list thingy
     }
     public int[] spliceRolls(int[] dice, int i) {
         int[] temp = new int[dice.length - 1];
-        for ( int j = 0 ; j < dice.length; j++ ) {
-            if (i != j) {
-                temp[j] = dice[j];
-            }
+        for(int j = 0 ; j < dice.length; j++ ) {
+            if(j<i) { temp[j] = dice[j]; }
+            else if(j>i) { temp[j-1] = dice[j]; }
         }
         return temp;
     }
-    public int[] validMoveRec(int[] move, int[] dice, Color color) {
+    public int[] validMoveRec(Move[] move, int[] dice, Color color) {
         for(int i=0; i<dice.length; i++) {
             Move[] temp = new Move[move.length];
             for(int j=0; j<move.length; j++) {
                 int index = tokenShift(move[j].spotNum(), dice[j], color);
                 //Is that a valid place to move it (your color or blank, or one other color)
             }
-            //if there is a dice roll left
             if (rolls[0]+ rolls[1] + rolls[2] + rolls[3] != 0 ) {
                 validMoveRec(temp, spliceRolls(dice, i), color);
             }
-
         }
     }
     public boolean gameOver() {

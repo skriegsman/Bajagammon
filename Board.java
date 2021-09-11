@@ -1,6 +1,6 @@
 
 public class Board {
-  final private int boardSize = 26;
+  final public int boardSize = 26;
   private Spot[] board = new Spot[boardSize];
 
   private int bPurg = 0;
