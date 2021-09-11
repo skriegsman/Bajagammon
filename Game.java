@@ -30,10 +30,21 @@ public class Game {
     public void repl() {}
     public boolean validMove(Color c) {
         //Move[] moves = stores spot/dice pairs
-        //Call validMoveRec(moves, rolls)
+        if (rolls[0] != rolls[1]) {
+            int[] tempRolls = {rolls[0], rolls[1]};
+        }
+        //Call validMoveRec(moves, tempRolls)
 
         //Something in purg?
         //Filter the totla moves down to spots of our color also not home
+    }
+    public int[] spliceRolls(int[] dice, int i) {
+        int[] temp = new int[dice.length - 1];
+        for ( int j = 0 ; j < dice.length; j++ ) {
+            if (i != j) {
+                temp[j] = dice[j];
+            }
+        }
     }
     public int[] validMoveRec(int[] move, int[] dice, Color color) {
         for(int i=0; i<dice.length; i++) {
@@ -43,7 +54,10 @@ public class Game {
                 //Is that a valid place to move it (your color or blank, or one other color)
             }
             //if there is a dice roll left
-            validMoveRec(temp, spliceRolls(dice, i), color);
+            if (rolls[0]+ rolls[1] + rolls[2] + rolls[3] != 0 ) {
+                validMoveRec(temp, spliceRolls(dice, i), color);
+            }
+
         }
     }
     public boolean gameOver() {
