@@ -8,10 +8,20 @@ public class Move{
         this.initIndex = this.finalIndex = initIndex;
         this.color = color;
     }
+    Move(Move m, int r) {
+        this.initIndex = m.initIndex;
+        this.finalIndex = m.finalIndex;
+        this.Color = m.Color;
+
+        for ( int i = 0; i < m.rolls.length ; i++ ) {
+            if (m.rolls[i] != 0) {
+                this.rolls[i] = m.rolls[i];
+            } else {
+                this.roll[i] = r; break;
+            }
+        }
+
+    }
 
     public int spotNum() { return initIndex; }
-    public boolean addDie(int roll) {
-        //Add the roll to rolls
-        //
-    }
 }

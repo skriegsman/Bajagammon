@@ -2,13 +2,16 @@ public class Player {
     private String type;
     private Color color;
 
-    Player() {}
-
+    Player(String type, Color color) {
+        this.type = type;
+        this.color = color;
+    }
+    public Color getColor() { this.color; }
     public int[] move(Game g) {
         switch(type){
-            case "random":
+            case "2":
                 return randomMove(g);
-            case "running":
+            case "3":
                 return runningMove(g);
             default:
                 return humanMove(g);

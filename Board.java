@@ -1,28 +1,21 @@
 
 public class Board {
-  final public int boardSize = 26;
+  final public int boardSize = 28;
   private Spot[] board = new Spot[boardSize];
-
-  private int bPurg = 0;
-  private int wPurg = 0;
 
   Board() {
     for(int i=0; i<boardSize; i++) { board[i] = new Spot(); }
     // set checkers in non-empty spots at beginning of game
-    board[1].setCount(2);   board[1].setColor(Color.B);
-    board[6].setCount(5);   board[6].setColor(Color.W);
-    board[8].setCount(3);   board[8].setColor(Color.W);
-    board[12].setCount(5);  board[12].setColor(Color.B);
-    board[13].setCount(5);  board[13].setColor(Color.W);
-    board[17].setCount(3);  board[17].setColor(Color.B);
-    board[19].setCount(5);  board[19].setColor(Color.B);
-    board[24].setCount(2);  board[24].setColor(Color.W);
+    board[2].setCount(2);   board[2].setColor(Color.B);
+    board[7].setCount(5);   board[7].setColor(Color.W);
+    board[9].setCount(3);   board[9].setColor(Color.W);
+    board[13].setCount(5);  board[13].setColor(Color.B);
+    board[14].setCount(5);  board[14].setColor(Color.W);
+    board[18].setCount(3);  board[18].setColor(Color.B);
+    board[20].setCount(5);  board[20].setColor(Color.B);
+    board[25].setCount(2);  board[25].setColor(Color.W);
   }
-  Board(Board b) {
-      this.bPurg = b.bPurg;
-      this.wPurg = b.wPurg;
-      this.board = b.getDeepBoard();
-  }
+  Board(Board b) { this.board = b.getDeepBoard(); }
 
   public Spot[] getDeepBoard() {
       Spot[] temp = new Spot[boardSize];
@@ -32,35 +25,14 @@ public class Board {
       return temp;
   }
 
-  public int wHome() { return 0; }
-  public int bHome() { return boardSize-1; }
+  public int wHome() { return 1; }
+  public int wPurg() { return 0;}
+  public int bHome() { return boardSize-2; }
+  public int bPurg() { return boardSize-1; }
 
   public Color getSpotType(int spot) { return board[spot].getColor(); }
   public int getSpotCount(int spot) { return board[spot].getCount(); }
 
-  /**
-    Parameters: index of spot to remove a token from and take to purgatory
-
-    Checks the color of what's in the spot, increments the correct purgatory,
-    and then decrements the board spot. (This will assign empty if count goes to zero)
-
-    Should not be called on a spot which already has count==0, this will incorrectly increment bPurg.
-  */
-  public void tokenToPurg(int spot) {
-    if(board[spot].getColor() == Color.W) { wPurg++; }
-    else { bPurg++; }
-    board[spot].decCount();
-  }
-  /**
-    Parameters: the color of the token in prugatory and the index of the spot to where the token is moved to
-
-    Checks the color of the token in purgatory, decrements the count in respective purgatory
-    Increments the count of the spot
-  */
-  public void purgToSpot(Color color, int spot) {
-    if(color == Color.W){ wPurg--; }else{ bPurg--; }
-    board[spot].incCount(color);
-  }
   /**
     Parameters: the indices of the spot to be moved from (A) and the spot to be moved to (B)
 
@@ -74,7 +46,12 @@ public class Board {
   */
   public void moveToken(int spotA, int spotB) {
     if(board[spotA].getColor() != board[spotB].getColor() && board[spotB].getColor() != Color.E) {
-      tokenToPurg(spotB);
+        if(board[spotB].getColor() == Color.W){
+            board[wPurg()].incCount(Color.W);
+        } else {
+            board[bPurg()].incCount(Color.B);
+        }
+        board[spotB].decCount();
     }
     board[spotA].decCount();
     board[spotB].incCount(board[spotA].getColor());
@@ -90,16 +67,21 @@ public class Board {
     String singleDash = "\t-----------\n";
     String s = "\t  A     B\n";
       s+= singleDash;
-      s+="\t| " +  board[25].toString() + " | " +  board[0].toString() + " | " + 0 + "\n";
+      s+="\t| " +  board[bHome()].toString() + " | " +  board[wHome()].toString() + " | " + "Home" + "\n";
       s+=doubleDash;
-      for(int i=1; i<(boardSize-2)/2+1; i++) {
-          s+="\t| " + board[boardSize-1-i].toString()  + " | " + board[i].toString() + " | " + i + "\n";
-          if ( i != (boardSize -2)/4 && i != (boardSize-2)/2) {
+      for(int i=2; i<boardSize/2; i++) {
+          s+="\t| " + board[boardSize-1-i].toString()  + " | " + board[i].toString() + " | " + (i-1)+ "\n";
+          if ( i != (boardSize -2)/4+1 && i != (boardSize-2)/2) {
             s+=singleDash;
           } else { s+=doubleDash;}
       }
-      s+="\t| " + " " + bPurg + " | " + " " + wPurg + " | " + 13 + "\n";
+      s+="\t| "  + board[bPurg()].toString() + " | " +  board[wPurg()].toString() + " | " + "Bar" + "\n";
       s+= singleDash;
       return s;
+  }
+
+  public static void main(String[] args) {
+      Board b = new Board();
+      System.out.println(b.toString());
   }
 }
