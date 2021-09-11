@@ -45,6 +45,7 @@ public class Game {
                 temp[j] = dice[j];
             }
         }
+        return temp;
     }
     public int[] validMoveRec(int[] move, int[] dice, Color color) {
         for(int i=0; i<dice.length; i++) {
