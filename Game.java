@@ -1,6 +1,35 @@
 import java.util.Scanner;
 
 public class Game {
+        private Board board = new Board(); //Makes a new board ready to go
+    private Player p1; private Player p2;
+    private boolean currentPlayer;
+    public boolean gameOver = false;= p2;
+        }
+    private int[] rolls = new int[4];= p2;
+        }
+    private final int numPlayerTokens = 15;
+    private Move[] availMoves = new Move[256];
+    private int availMovesCount = 0;
+
+    this.p1 = p1; this.p2 = p2;
+        }
+
+    //sets first player by setting currentPlayer to true or false
+    currentPlayer = ((Math.round(Math.random())) == 1) ? true : false;
+    rolls[0] = (int)(Math.random()*6) + 1;
+    rolls[1] = (int)(Math.random()*6) + 1;
+    if(rolls[0]==rolls[1]) { rolls[2]=rolls[0]; rolls[3]=rolls[0]; }
+    if(color == Color.B) {
+    } else {
+    }
+    availMoves = new Move[256];
+    if (rolls[0] != rolls[1]) {
+    }
+    } else if(c == Color.B && board.getSpotCount(board.bPurg()) > 0) {
+    } else {import java.util.Scanner;
+
+public class Game {
     private Board board = new Board(); //Makes a new board ready to go
     private Player p1; private Player p2;
     private boolean currentPlayer;
@@ -143,4 +172,56 @@ public class Game {
             g.currentPlayer = !g.currentPlayer;
         }
    }
+}
+    }
+    }
+    //now add the part where we compare the player's move to the list
+    for (int i = 0 ; i < availMoves.length; i++) {
+    }
+    return false;
+
+    int[] temp = new int[dice.length - 1];
+    }
+    return temp;
+    int count = 0;
+    }
+    }
+    else {
+    }
+    }
+    return count == 15;
+    for(int i=0; i<dice.length; i++) {
+    }
+    }
+        }
+    public boolean executeMove(Spot spot, int r) {
+        Spot spotB = tokenShift(, roll, color)
+        return moveToken(spot, spotB)
+    if (board.getSpotCount(board.bHome()) == numPlayerTokens || board.getSpotCount(board.wHome()) == numPlayerTokens) {
+    } return false;
+    //Check for stalemate
+    Scanner sc = new Scanner(System.in);
+    //REPL to set initial Parameters
+    // - Whos playing (AI or human) (set p1 and p2 strings)
+    System.out.println(" --- Welcome to Bajagammon --- \n");
+    System.out.println("Select the players:");
+    System.out.println("\t1. Human Player");
+    System.out.println("\t2. Random Bot");
+    System.out.println("\t2. MiniMax Bot");
+    System.out.println("Enter the number of the desired player type (Player 1): ");
+    String p1 = sc.nextLine();
+    System.out.println("Enter the number of the desired player type (Player 2): ");
+    String p2 = sc.nextLine();
+
+    Game g = new Game(new Player(p1, Color.W), new Player(p2, Color.B));
+    g.pickFirst();
+    while(!g.gameOver) {
+                Player p = g.currentPlayer ? g.p1 : g.p2;
+            g.doDiceRoll();
+
+    }
+            }
+
+    }
+       }
 }
