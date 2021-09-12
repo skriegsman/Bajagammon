@@ -7,10 +7,11 @@ public class Spot{
   private int count = 0;
   private int index;
 
-  Spot(){} //Constructor
+  Spot(int i){ this.index = i; } //Constructor
   Spot(Spot s) {
-      this.color = s.color;
-      this.count = s.count;
+      this.color = s.getColor();
+      this.count = s.getCount();
+      this.index = s.getIndex();
   }
 
   //Methods to get and set the color
@@ -18,7 +19,7 @@ public class Spot{
   public void setColor(Color color) { this.color = color; }
 
   //Methods to get and set the index in the board
-  public Color getIndex() { return this.index; }
+  public int getIndex() { return this.index; }
   public void setIndex(int index) { this.index = index; }
 
   //Methods to adjust the counts

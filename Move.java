@@ -1,26 +1,41 @@
 public class Move{
     private int initIndex;
     private int finalIndex;
-    private int[] rolls = new int[4];
+    private int[] rolls;
     private Color color;
 
     Move(int initIndex, Color color) {
         this.initIndex = this.finalIndex = initIndex;
         this.color = color;
+        this.rolls = new int[1];
+    }
+    Move(int initIndex, int roll, Color color) {
+        rolls = new int[1];
+        this.color = color;
+        this.initIndex = initIndex;
+        this.rolls[0] = roll;
+
+        if(color == Color.B) {
+            this.finalIndex = Math.min(initIndex+roll, 25);
+        } else {
+            this.finalIndex = Math.max(0,initIndex-roll);
+        }
     }
     Move(Move m, int r) {
         this.initIndex = m.initIndex;
         this.finalIndex = m.finalIndex;
-        this.Color = m.Color;
+        this.color = m.color;
 
-        for ( int i = 0; i < m.rolls.length ; i++ ) {
-            if (m.rolls[i] != 0) {
+        if(m.rolls == null) {
+            this.rolls = new int[1];
+            this.rolls[0] = r;
+        } else {
+            this.rolls = new int[m.rolls.length+1];
+            for(int i=0; i<m.rolls.length; i++) {
                 this.rolls[i] = m.rolls[i];
-            } else {
-                this.roll[i] = r; break;
             }
+            this.rolls[this.rolls.length-1] = r;
         }
-
     }
 
     public boolean compareTo(Move m){
@@ -43,4 +58,8 @@ public class Move{
     public int getFinalIndex() { return this.finalIndex; }
     public Color getColor() { return this.color; }
     public int getRoll(int i) { return rolls[i]; }
+
+    public String toString() {
+        return "(" + initIndex + ", " + rolls[0] + ")";
+    }
 }

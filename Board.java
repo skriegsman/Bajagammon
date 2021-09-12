@@ -4,7 +4,7 @@ public class Board {
   private Spot[] board = new Spot[boardSize];
 
   Board() {
-    for(int i=0; i<boardSize; i++) { board[i] = new Spot(); }
+    for(int i=0; i<boardSize; i++) { board[i] = new Spot(i); }
     // set checkers in non-empty spots at beginning of game
     board[2].setCount(2);   board[2].setColor(Color.B);
     board[7].setCount(5);   board[7].setColor(Color.W);
@@ -67,15 +67,15 @@ public class Board {
     String singleDash = "\t-----------\n";
     String s = "\t  A     B\n";
       s+= singleDash;
-      s+="\t| " +  board[bHome()].toString() + " | " +  board[wHome()].toString() + " | " + "Home" + "\n";
+      s+="\t| " +  board[bHome()].toString() + " | " +  board[wHome()].toString() + " | " + "Home(1)" + "\n";
       s+=doubleDash;
       for(int i=2; i<boardSize/2; i++) {
-          s+="\t| " + board[boardSize-1-i].toString()  + " | " + board[i].toString() + " | " + (i-1)+ "\n";
+          s+="\t| " + board[boardSize-1-i].toString()  + " | " + board[i].toString() + " | " + (i)+ "\n";
           if ( i != (boardSize -2)/4+1 && i != (boardSize-2)/2) {
             s+=singleDash;
           } else { s+=doubleDash;}
       }
-      s+="\t| "  + board[bPurg()].toString() + " | " +  board[wPurg()].toString() + " | " + "Bar" + "\n";
+      s+="\t| "  + board[bPurg()].toString() + " | " +  board[wPurg()].toString() + " | " + "Bar(0)" + "\n";
       s+= singleDash;
       return s;
   }
