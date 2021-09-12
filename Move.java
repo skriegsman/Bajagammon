@@ -16,9 +16,9 @@ public class Move{
         this.rolls[0] = roll;
 
         if(color == Color.B) {
-            this.finalIndex = Math.min(initIndex+roll, 25);
+            this.finalIndex = Math.min(initIndex+roll, 26);
         } else {
-            this.finalIndex = Math.max(0,initIndex-roll);
+            this.finalIndex = Math.max(1,initIndex-roll);
         }
     }
     Move(Move m, int r) {

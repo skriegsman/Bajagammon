@@ -40,9 +40,9 @@ public class Game {
     }
     public int tokenShift(int index, int roll, Color color) {
         if(color == Color.B) {
-            return Math.min(index+roll, 25);
+            return Math.min(index+roll, 26);
         } else {
-            return Math.max(0,index-roll);
+            return Math.max(1,index-roll);
         }
     }
     public boolean validMove(Color c, Move m) {
